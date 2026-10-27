@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Laboratorio Full Stack | Resolución de problemas</title>
+  <meta name="description" content="Simulador educativo de metodologías PDCA, A3 y Scrum aplicado a un proyecto WordPress con WooCommerce en XAMPP.">
+  <style>
+    :root {
+      --bg: #f5f7fb; --panel: #fff; --ink: #172033; --muted: #5c667a;
+      --line: #dce2ec; --primary: #3157d5; --primary-dark: #2344b5;
+      --soft: #edf1ff; --good: #147d52; --bad: #b42318; --radius: 16px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.55; }
+    header { background: #17264b; color: white; padding: 32px 20px 28px; }
+    .wrap { width: min(1040px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; font-weight: 800; color: #bdcaff; }
+    h1 { margin: 8px 0; font-size: clamp(1.8rem, 4vw, 2.7rem); line-height: 1.12; }
+    header p { max-width: 760px; color: #e0e7ff; margin-bottom: 0; }
+    main { padding: 24px 0 48px; }
+    .notice { padding: 14px 16px; border: 1px solid #e6d59b; background: #fff9e7; border-radius: 12px; color: #604b13; margin-bottom: 20px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: 0 3px 14px #17203308; margin-bottom: 16px; }
+    .panel h2 { margin: 0 0 8px; font-size: 1.25rem; }
+    .panel h3 { margin: 18px 0 8px; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    label { display: block; font-weight: 700; margin: 14px 0 6px; }
+    input, textarea, select { display: block; width: 100%; padding: 11px 12px; border: 1px solid #c9d2e1; border-radius: 10px; background: white; color: var(--ink); font: inherit; }
+    textarea { min-height: 90px; resize: vertical; }
+    input:focus, textarea:focus, select:focus { outline: 3px solid #3157d52b; border-color: var(--primary); }
+    .hint { font-size: .86rem; color: var(--muted); margin-top: 5px; }
+    .method-head { display: flex; align-items: flex-start; gap: 12px; }
+    .method-number { flex: 0 0 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--soft); color: var(--primary); font-weight: 900; }
+    .method-head h2 { margin-top: 2px; }
+    .method-head p { margin: 0; color: var(--muted); }
+    .step { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 4px; }
+    .btn { appearance: none; border: 0; border-radius: 11px; padding: 12px 17px; font: inherit; font-weight: 800; cursor: pointer; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-primary:disabled { opacity: .6; cursor: wait; }
+    .btn-secondary { background: #e9edf5; color: var(--ink); }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 20px; }
+    .status { margin-top: 14px; padding: 12px 14px; border-radius: 10px; display: none; }
+    .status.show { display: block; }
+    .status.success { background: #e8f7ef; color: #145c3d; border: 1px solid #b9e6cd; }
+    .status.error { background: #fff0ef; color: #8f1d16; border: 1px solid #f0c3bf; }
+    .checkline { display: flex; gap: 10px; align-items: flex-start; font-weight: 500; }
+    .checkline input { width: auto; margin-top: 5px; }
+    footer { padding: 0 0 30px; color: var(--muted); font-size: .88rem; }
+    .pill { display: inline-block; background: #e9edf5; color: #34405a; border-radius: 999px; padding: 3px 9px; font-size: .78rem; font-weight: 800; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } .panel { padding: 17px; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Tecnicatura Universitaria en Programación Full Stack</div>
+    <h1>Laboratorio de resolución de problemas</h1>
+    <p>Un caso profesional para experimentar con PDCA, A3 y Scrum en un proyecto WordPress + WooCommerce ejecutado localmente con XAMPP.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="notice">
+    <strong>Consigna:</strong> trabajá las tres metodologías sobre el mismo caso. Tus respuestas se envían juntas en una entrega. No podrás consultar ni recuperar tus respuestas desde esta página.
+  </div>
+
+  <section class="panel">
+    <h2>El caso de estudio</h2>
+    <p>Un pequeño negocio quiere lanzar una zapatería online con estética victoriana. El equipo está desarrollando un tema de WordPress y un plugin complementario para WooCommerce en un entorno local con XAMPP. Durante las pruebas, el equipo descubre que MariaDB no inicia, por lo que WordPress no puede conectarse a la base de datos y el equipo no puede continuar las pruebas de la tienda.</p>
+    <p><strong>Datos observados:</strong> XAMPP no consigue iniciar MariaDB; el cliente MySQL devuelve un error de conexión <code>ERROR 2002 (HY000): Can't connect to MySQL server on 'localhost' (10061)</code>; los registros y las herramientas de diagnóstico apuntan a un posible problema en la tabla del sistema <code>mysql.global_priv</code> y su índice Aria. No se debe asumir que el primer mensaje de error ya identifica la causa raíz.</p>
+    <p class="muted">Tu tarea es proponer un abordaje metódico, distinguir síntomas de causas y definir cómo el equipo verificará la solución.</p>
+  </section>
+
+  <form id="submission-form">
+    <section class="panel">
+      <h2>Identificación del estudiante</h2>
+      <p class="muted">El DNI se usa para contabilizar las entregas. No se solicita contraseña. Evitá incluir datos personales en los campos de texto.</p>
+      <label for="dni">DNI <span aria-hidden="true">*</span></label>
+      <input id="dni" name="dni" inputmode="numeric" autocomplete="off" pattern="[0-9]{7,8}" minlength="7" maxlength="8" required placeholder="Solo números, sin puntos">
+      <div class="hint">Se aceptan 7 u 8 dígitos. El límite es de 10 entregas por DNI.</div>
+    </section>
+
+    <section class="panel">
+      <div class="method-head">
+        <div class="method-number">1</div>
+        <div><h2>PDCA — Planificar, Hacer, Verificar, Actuar</h2><p>Organizá un ciclo de mejora basado en evidencias.</p></div>
+      </div>
+      <div class="step">
+        <h3>Planificar (Plan)</h3>
+        <label for="pdca_problem">¿Cuál es el problema concreto y qué impacto tiene? *</label>
+        <textarea id="pdca_problem" required maxlength="3000" placeholder="Diferenciá el problema observable de sus consecuencias."></textarea>
+        <label for="pdca_hypothesis">¿Qué causa hipotética investigarías primero y por qué? *</label>
+        <textarea id="pdca_hypothesis" required maxlength="3000"></textarea>
+        <label for="pdca_metric">¿Qué dato medible usarías para definir el éxito? *</label>
+        <textarea id="pdca_metric" required maxlength="2000" placeholder="Ej.: arranque correcto en 5 intentos consecutivos, sin errores nuevos en logs."></textarea>
+      </div>
+      <div class="step">
+        <h3>Hacer (Do)</h3>
+        <label for="pdca_action">¿Qué prueba o acción acotada realizarías primero? *</label>
+        <textarea id="pdca_action" required maxlength="3000"></textarea>
+      </div>
+      <div class="step">
+        <h3>Verificar (Check)</h3>
+        <label for="pdca_evidence">¿Qué evidencias compararías antes y después del cambio? *</label>
+        <textarea id="pdca_evidence" required maxlength="3000" placeholder="Logs, estado del servicio, conexión, pruebas de WordPress..."></textarea>
+      </div>
+      <div class="step">
+        <h3>Actuar (Act)</h3>
+        <label for="pdca_standard">Si funciona, ¿cómo evitarías que el problema se repita? *</label>
+        <textarea id="pdca_standard" required maxlength="3000"></textarea>
+      </div>
+      <label for="pdca_opinion">Tu opinión sobre PDCA</label>
+      <textarea id="pdca_opinion" maxlength="2000" placeholder="¿Qué te ayudó a ordenar? ¿Qué limitaciones le encontraste?"></textarea>
+    </section>
+
+    <section class="panel">
+      <div class="method-head">
+        <div class="method-number">2</div>
+        <div><h2>A3 — Análisis estructurado del problema</h2><p>Resumí el razonamiento, la causa raíz y el plan de seguimiento en una vista coherente.</p></div>
+      </div>
+      <label for="a3_background">Contexto y situación actual *</label>
+      <textarea id="a3_background" required maxlength="3000"></textarea>
+      <label for="a3_goal">Objetivo concreto *</label>
+      <textarea id="a3_goal" required maxlength="2000" placeholder="¿Qué estado debería alcanzar el sistema y cómo se medirá?"></textarea>
+      <label for="a3_root_cause">Análisis de causa raíz: ¿qué investigarías y cómo evitarías confundir síntoma con causa? *</label>
+      <textarea id="a3_root_cause" required maxlength="3000"></textarea>
+      <label for="a3_countermeasures">Contramedidas y riesgos *</label>
+      <textarea id="a3_countermeasures" required maxlength="3000" placeholder="Incluí cómo protegerías los datos antes de reparar o reinstalar."></textarea>
+      <label for="a3_followup">Plan de seguimiento: responsables, pasos y verificación *</label>
+      <textarea id="a3_followup" required maxlength="3000"></textarea>
+      <label for="a3_opinion">Tu opinión sobre A3</label>
+      <textarea id="a3_opinion" maxlength="2000" placeholder="¿Qué aporta resumir el problema en una estructura A3?"></textarea>
+    </section>
+
+    <section class="panel">
+      <div class="method-head">
+        <div class="method-number">3</div>
+        <div><h2>Scrum — Trabajo incremental del equipo</h2><p>Convertí el problema en trabajo priorizado y verificable dentro de un sprint.</p></div>
+      </div>
+      <label for="scrum_goal">Objetivo del sprint *</label>
+      <textarea id="scrum_goal" required maxlength="2000" placeholder="Definí un resultado útil, no solo una lista de tareas."></textarea>
+      <label for="scrum_backlog">Product Backlog priorizado *</label>
+      <textarea id="scrum_backlog" required maxlength="3000" placeholder="Escribí historias de usuario o tareas ordenadas por prioridad."></textarea>
+      <label for="scrum_tasks">¿Qué tareas incluirías en el sprint y cómo las dividirías? *</label>
+      <textarea id="scrum_tasks" required maxlength="3000"></textarea>
+      <label for="scrum_done">Definición de terminado (Definition of Done) *</label>
+      <textarea id="scrum_done" required maxlength="3000" placeholder="¿Qué condiciones técnicas y funcionales deben cumplirse?"></textarea>
+      <label for="scrum_review">¿Qué revisarías en la Sprint Review y qué preguntarías en la retrospectiva? *</label>
+      <textarea id="scrum_review" required maxlength="3000"></textarea>
+      <label for="scrum_opinion">Tu opinión sobre Scrum</label>
+      <textarea id="scrum_opinion" maxlength="2000" placeholder="¿Ayuda a coordinar al equipo en este caso? ¿Qué podría resultar excesivo?"></textarea>
+    </section>
+
+    <section class="panel">
+      <h2>Reflexión final</h2>
+      <label for="comparison">Comparación personal: ¿qué metodología te resultó más útil para este caso y por qué?</label>
+      <textarea id="comparison" maxlength="3000"></textarea>
+      <label class="checkline"><input type="checkbox" id="confirm" required> Confirmo que estas respuestas son mías y entiendo que se enviarán al docente para su evaluación.</label>
+      <div class="actions">
+        <button class="btn btn-primary" id="submit-button" type="submit">Enviar entrega</button>
+        <button class="btn btn-secondary" type="reset">Borrar formulario</button>
+        <span class="pill">Una entrega incluye las 3 metodologías</span>
+      </div>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <p class="hint">No cierres ni recargues la página mientras se envía. La página no recupera ni muestra entregas anteriores.</p>
+    </section>
+  </form>
+</main>
+
+<footer class="wrap">
+  <p>Laboratorio educativo · Metodología de Resolución de Problemas · Full Stack. Las entregas se almacenan en una base centralizada configurada por el responsable de la cursada.</p>
+</footer>
+
+<!-- Supabase JS v2. Reemplazá las dos constantes de configuración de abajo. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // Configuración pública del proyecto Supabase. Nunca pongas aquí la clave service_role.
+  const SUPABASE_URL = "https://fjuzdjszilbllozhahfb.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_HvTg2O-ePRL6w1W4828Oxw_yUsRqJfo";
+
+  const form = document.getElementById("submission-form");
+  const button = document.getElementById("submit-button");
+  const statusBox = document.getElementById("status");
+
+  function value(id) {
+    return document.getElementById(id).value.trim();
+  }
+
+  function showStatus(message, type) {
+    statusBox.textContent = message;
+    statusBox.className = "status show " + type;
+    statusBox.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function collectAnswers() {
+    return {
+      pdca: {
+        problem: value("pdca_problem"),
+        hypothesis: value("pdca_hypothesis"),
+        metric: value("pdca_metric"),
+        action: value("pdca_action"),
+        evidence: value("pdca_evidence"),
+        standardization: value("pdca_standard"),
+        opinion: value("pdca_opinion")
+      },
+      a3: {
+        background: value("a3_background"),
+        goal: value("a3_goal"),
+        root_cause_analysis: value("a3_root_cause"),
+        countermeasures_and_risks: value("a3_countermeasures"),
+        follow_up: value("a3_followup"),
+        opinion: value("a3_opinion")
+      },
+      scrum: {
+        sprint_goal: value("scrum_goal"),
+        prioritized_product_backlog: value("scrum_backlog"),
+        sprint_tasks: value("scrum_tasks"),
+        definition_of_done: value("scrum_done"),
+        review_and_retrospective: value("scrum_review"),
+        opinion: value("scrum_opinion")
+      },
+      final_comparison: value("comparison")
+    };
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+
+    if (SUPABASE_URL.startsWith("PEGAR_") || SUPABASE_ANON_KEY.startsWith("PEGAR_")) {
+      showStatus("Falta configurar Supabase: editá SUPABASE_URL y SUPABASE_ANON_KEY al final del archivo index.html.", "error");
+      return;
+    }
+    if (!window.supabase || !window.supabase.createClient) {
+      showStatus("No se pudo cargar la biblioteca de conexión. Comprobá tu conexión a internet y volvé a intentarlo.", "error");
+      return;
+    }
+
+    const dni = value("dni").replace(/\D/g, "");
+    if (!/^\d{7,8}$/.test(dni)) {
+      showStatus("Ingresá un DNI de 7 u 8 dígitos, sin puntos.", "error");
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Enviando…";
+    statusBox.className = "status";
+    try {
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+      });
+      const payload = {
+        p_dni: dni,
+        p_respuestas: collectAnswers()
+      };
+      const { data, error } = await client.rpc("enviar_entrega", payload);
+      if (error) {
+        const msg = (error.message || "").toLowerCase();
+        if (msg.includes("limite_alcanzado") || msg.includes("límite alcanzado")) {
+          showStatus("No se pudo enviar: este DNI ya alcanzó el máximo de 10 entregas.", "error");
+        } else if (msg.includes("dni_invalido")) {
+          showStatus("El DNI no tiene el formato esperado. Revisá que contenga 7 u 8 dígitos.", "error");
+        } else {
+          console.error("Supabase RPC error:", error);
+          showStatus("No se pudo guardar la entrega. Revisá la configuración de Supabase o intentá nuevamente más tarde.", "error");
+        }
+        return;
+      }
+      showStatus("Entrega enviada correctamente. La página no permite recuperar ni consultar las respuestas enviadas.", "success");
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      showStatus("Ocurrió un error de conexión. Comprobá tu conexión a internet e intentá nuevamente.", "error");
+    } finally {
+      button.disabled = false;
+      button.textContent = "Enviar entrega";
+    }
+  });
+</script>
+</body>
+</html>
